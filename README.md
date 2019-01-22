@@ -1,6 +1,6 @@
 # Evebox Setup
 
-This document describes how to setup Evebox with Elasticsearch and Logstash on a CentOS server to index Suricata events.
+This document describes how to setup Evebox with Elasticsearch, Logstash and Kibana in docker containers on a CentOS server to index Suricata events.
 
 ## Requirements
 
