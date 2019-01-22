@@ -5,8 +5,10 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
     container_name: elasticsearch
-    environment: ['discovery.type=single-node']
+    environment: ['discovery.type=single-node', 'ES_JAVA_OPTS=-Xms2g -Xmx2g']
     ports: ['9200:9200', '9300:9300']
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
 
   kibana:
     image: docker.elastic.co/kibana/kibana:6.3.2
@@ -19,28 +21,12 @@ services:
     container_name: logstash
     ports: ['5044:5044']
 
-  filebeat:
-    image: filebeat
-    container_name: filebeat
-    depends_on: ['suricata', 'logstash']
-    volumes: ['logs:/var/log/suricata']
-
-  suricata:
-    image: suricata
-    container_name: suricata
-    network_mode: host
-    user: root
-    privileged: true
-    volumes: ['logs:/var/log/suricata']
-  
   evebox:
     image: evebox
     container_name: evebox
     depends_on: ['elasticsearch']
     ports: ['5636:5636']
-    environment: ['ELASTICSEARCH=http://elasticsearch:9200']
-
+    environment: ['ELASTICSEARCH=http://elasticsearch:9200', 'INDEX=logstash']
 
 volumes:
-  logs:
-
+  esdata:
