@@ -53,12 +53,11 @@ Clone the repo to download required files
 $ git clone https://github.com/counterflow-ai/eve-elk.git
 ```
 
-Grant execute permissions to the `bootstrap.sh` script.  Run the script to stop any running containers, create the necessary docker images and start the containers from the created images. 
+Run `docker-compose up` to start the containers 
 
 ```console
 $ cd eve-elk
-$ chmod +x bootstrap.sh
-$ ./bootstrap.sh
+$ docker-compose up
 ```
 
 It will take a couple of minutes for all containers to start. Run the `docker ps` command to check the status of the containers
