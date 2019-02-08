@@ -4,29 +4,32 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    container_name: elasticsearch
-    environment: ['discovery.type=single-node', 'ES_JAVA_OPTS=-Xms2g -Xmx2g']
-    ports: ['9200:9200', '9300:9300']
+    container_name: elasticsearch    
     volumes:
       - esdata:/usr/share/elasticsearch/data
-
+    ports:
+      - 9200:9200
+  
   kibana:
     image: docker.elastic.co/kibana/kibana:6.3.2
     container_name: kibana
     environment: ['elasticsearch.url=http://elasticsearch:9200']
-    ports: ['5601:5601']
+    ports: ['5601:5601']    
 
   logstash:
-    image: logstash
+    image: docker.elastic.co/logstash/logstash:6.3.2
     container_name: logstash
-    ports: ['5044:5044']
+    ports: ['5044:5044']    
+    volumes:
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/    
 
   evebox:
-    image: evebox
+    image: counterflow/evebox
     container_name: evebox
     depends_on: ['elasticsearch']
     ports: ['5636:5636']
-    environment: ['ELASTICSEARCH=http://elasticsearch:9200', 'INDEX=logstash']
+    command: ['-e', 'http://elasticsearch:9200', '-i', 'logstash', '--elasticsearch-keyword', 'keyword']
 
 volumes:
   esdata:
+    driver: local
