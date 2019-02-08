@@ -53,11 +53,11 @@ Clone the repo to download required files
 $ git clone https://github.com/counterflow-ai/eve-elk.git
 ```
 
-Run `docker-compose up` to start the containers 
+Run `docker-compose up -d` to start the containers in detached mode
 
 ```console
 $ cd eve-elk
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 It will take a couple of minutes for all containers to start. Run the `docker ps` command to check the status of the containers
@@ -65,11 +65,11 @@ It will take a couple of minutes for all containers to start. Run the `docker ps
 ```console
 $ docker ps
 
-CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                                            NAMES
-bf11c19680f7        evebox                                                "/bin/sh -c 'evebox …"   1 minute ago        Up 1 minute         0.0.0.0:5636->5636/tcp                           evebox
-72ecb50532bd        logstash                                              "/usr/local/bin/dock…"   1 minute ago        Up 1 minute         0.0.0.0:5044->5044/tcp, 9600/tcp                 logstash
-1ee614b8d284        docker.elastic.co/elasticsearch/elasticsearch:6.3.2   "/usr/local/bin/dock…"   1 minute ago        Up 1 minute         0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   elasticsearch
-4db1224c5838        docker.elastic.co/kibana/kibana:6.3.2                 "/usr/local/bin/kiba…"   1 minute ago        Up 1 minute         0.0.0.0:5601->5601/tcp                           kibana
+CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                              NAMES
+3dd456752a57        counterflow/evebox                                    "/docker-entrypoint.…"   About an hour ago   Up 7 seconds        0.0.0.0:5636->5636/tcp             evebox
+57cfd7580ccc        docker.elastic.co/elasticsearch/elasticsearch:6.3.2   "/usr/local/bin/dock…"   About an hour ago   Up 9 seconds        0.0.0.0:9200->9200/tcp, 9300/tcp   elasticsearch
+051f764ab830        docker.elastic.co/kibana/kibana:6.3.2                 "/usr/local/bin/kiba…"   About an hour ago   Up 9 seconds        0.0.0.0:5601->5601/tcp             kibana
+65c2e6ee1170        docker.elastic.co/logstash/logstash:6.3.2             "/usr/local/bin/dock…"   About an hour ago   Up 9 seconds        0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
 ```
 
 ## Usage
